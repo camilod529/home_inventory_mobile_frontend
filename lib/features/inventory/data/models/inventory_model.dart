@@ -1,3 +1,5 @@
+import 'package:home_inventory_app/features/product/data/models/product_model.dart';
+
 import '../../domain/entities/inventory.dart';
 
 class InventoryModel extends Inventory {
@@ -7,6 +9,7 @@ class InventoryModel extends Inventory {
     required super.code,
     required super.ownerId,
     required super.members,
+    required super.products,
   });
 
   factory InventoryModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,11 @@ class InventoryModel extends Inventory {
               ?.map(
                 (member) => member['id'] as String,
               ) // Extraer IDs de los miembros
+              .toList() ??
+          [],
+      products:
+          (json['products'] as List<dynamic>?)
+              ?.map((productJson) => ProductModel.fromJson(productJson))
               .toList() ??
           [],
     );

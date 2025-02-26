@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:home_inventory_app/features/product/domain/entities/product.dart';
 
 class Inventory extends Equatable {
   final String id;
@@ -6,6 +7,7 @@ class Inventory extends Equatable {
   final String code;
   final String ownerId;
   final List<String> members;
+  final List<Product> products;
 
   const Inventory({
     required this.id,
@@ -13,6 +15,7 @@ class Inventory extends Equatable {
     required this.code,
     required this.ownerId,
     required this.members,
+    required this.products,
   });
 
   @override

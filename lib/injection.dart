@@ -19,6 +19,14 @@ import 'package:home_inventory_app/features/inventory/domain/usecases/create_inv
 import 'package:home_inventory_app/features/inventory/domain/usecases/join_inventory.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_bloc.dart';
 
+// Importaciones del módulo de Productos
+import 'package:home_inventory_app/features/product/data/datasources/product_remote_data_source.dart';
+import 'package:home_inventory_app/features/product/data/repositories/product_repository_impl.dart';
+import 'package:home_inventory_app/features/product/domain/repositories/product_repository.dart';
+import 'package:home_inventory_app/features/product/domain/usecases/get_products.dart';
+// import 'package:home_inventory_app/features/product/domain/usecases/get_products.dart';
+import 'package:home_inventory_app/features/product/presentation/bloc/product_bloc.dart';
+
 final sl = GetIt.instance;
 
 void setupDependencies() {
@@ -87,4 +95,21 @@ void setupDependencies() {
       joinInventory: sl<JoinInventory>(),
     ),
   );
+
+  // ==============================
+  //  Productos
+  // ==============================
+  sl.registerLazySingleton<ProductRemoteDataSource>(
+    () => ProductRemoteDataSourceImpl(sl<Dio>()),
+  );
+
+  sl.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImpl(sl<ProductRemoteDataSource>()),
+  );
+
+  sl.registerLazySingleton<GetProducts>(
+    () => GetProducts(sl<ProductRepository>()),
+  );
+
+  sl.registerLazySingleton(() => ProductBloc(sl<GetProducts>()));
 }

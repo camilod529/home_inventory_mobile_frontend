@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_bloc.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_event.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_state.dart';
@@ -45,6 +46,9 @@ class InventoryListPage extends StatelessWidget {
                       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
                       onTap: () {
                         // Navegar al detalle del inventario
+                        context.push(
+                          '/inventory/${Uri.encodeComponent(inventory.id)}/${Uri.encodeComponent(inventory.name)}',
+                        );
                       },
                     ),
                   );

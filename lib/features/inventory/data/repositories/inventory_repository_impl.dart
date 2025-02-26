@@ -15,8 +15,7 @@ class InventoryRepositoryImpl implements InventoryRepository {
     try {
       final inventory = await remoteDataSource.createInventory(name);
       return Right(inventory);
-    } on DioException catch (e) {
-      print(e);
+    } on DioException {
       return Left(ServerFailure());
     } catch (e) {
       return Left(ServerFailure());
