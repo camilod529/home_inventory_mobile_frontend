@@ -4,6 +4,7 @@ import 'package:home_inventory_app/features/auth/presentation/pages/register_pag
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_detail_page.dart';
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_list_page.dart';
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_selection_page.dart';
+import 'package:home_inventory_app/features/product/presentation/pages/product_form_page.dart';
 
 final router = GoRouter(
   initialLocation: '/login',
@@ -29,6 +30,16 @@ final router = GoRouter(
         return InventoryDetailPage(
           inventoryName: inventoryName,
           inventoryId: inventoryId,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/product-form',
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        return ProductFormPage(
+          inventoryId: extra?['inventoryId'],
+          productId: extra?['productId'],
         );
       },
     ),

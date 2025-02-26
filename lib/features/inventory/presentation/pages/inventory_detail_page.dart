@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_bloc.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_event.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_state.dart';
+import 'package:home_inventory_app/features/product/presentation/widgets/product_item.dart';
 
 class InventoryDetailPage extends StatefulWidget {
   final String inventoryName;
@@ -32,6 +34,16 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(widget.inventoryName)),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(
+            '/product-form',
+            extra: {'inventoryId': widget.inventoryId},
+          );
+        },
+        tooltip: "Agregar producto",
+        child: const Icon(Icons.add),
+      ),
       body: BlocBuilder<ProductBloc, ProductState>(
         builder: (context, state) {
           if (state is ProductLoading) {
@@ -49,18 +61,14 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                   itemCount: state.products.length,
                   itemBuilder: (context, index) {
                     final product = state.products[index];
-                    return Card(
-                      elevation: 2,
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.shopping_basket,
-                          color: Colors.green,
-                        ),
-                        title: Text(product.name),
-                        subtitle: Text(
-                          "Cantidad: ${product.quantity} ${product.unit}",
-                        ),
-                      ),
+                    return ProductItem(
+                      product: product,
+                      onEdit: () {
+                        // TODO: Implementar la edición de productos
+                      },
+                      onDelete: () {
+                        // TODO: Implementar la eliminación de productos
+                      },
                     );
                   },
                 );
