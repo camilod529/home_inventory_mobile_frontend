@@ -61,6 +61,7 @@ class ProductRepositoryImpl implements ProductRepository {
         inventoryId: product.inventoryId,
       );
 
+      // TODO: Check for errors
       final productUpdated = await remoteDataSource.updateProduct(
         productId,
         dto,
