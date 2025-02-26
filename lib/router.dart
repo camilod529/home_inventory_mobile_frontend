@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:home_inventory_app/features/auth/presentation/pages/login_page.dart';
 import 'package:home_inventory_app/features/auth/presentation/pages/register_page.dart';
+import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_list_page.dart';
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_selection_page.dart';
 
 final router = GoRouter(
@@ -11,6 +12,10 @@ final router = GoRouter(
     GoRoute(
       path: '/create-inventory',
       builder: (context, state) => InventorySelectionPage(),
+    ),
+    GoRoute(
+      path: '/inventory-list',
+      builder: (context, state) => InventoryListPage(),
     ),
   ],
 );

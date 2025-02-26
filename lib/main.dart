@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:home_inventory_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_bloc.dart';
 
 import 'package:home_inventory_app/injection.dart';
 import 'package:home_inventory_app/router.dart';
@@ -13,14 +14,8 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider<AuthBloc>(
-          create:
-              (context) => AuthBloc(
-                loginUseCase: sl(),
-                registerUseCase: sl(),
-                logoutUseCase: sl(),
-              ),
-        ),
+        BlocProvider<AuthBloc>(create: (context) => sl<AuthBloc>()),
+        BlocProvider<InventoryBloc>(create: (context) => sl<InventoryBloc>()),
       ],
       child: const MyApp(),
     ),

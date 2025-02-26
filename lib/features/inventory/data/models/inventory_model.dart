@@ -4,6 +4,7 @@ class InventoryModel extends Inventory {
   const InventoryModel({
     required super.id,
     required super.name,
+    required super.code,
     required super.ownerId,
     required super.members,
   });
@@ -12,8 +13,15 @@ class InventoryModel extends Inventory {
     return InventoryModel(
       id: json['id'],
       name: json['name'],
-      ownerId: json['ownerId'],
-      members: List<String>.from(json['members'] ?? []),
+      code: json['code'],
+      ownerId: json['owner']?['id'],
+      members:
+          (json['members'] as List<dynamic>?)
+              ?.map(
+                (member) => member['id'] as String,
+              ) // Extraer IDs de los miembros
+              .toList() ??
+          [],
     );
   }
 

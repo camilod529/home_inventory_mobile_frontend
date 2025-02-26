@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_bloc.dart';
+import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_event.dart';
+import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_state.dart';
+
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
@@ -15,29 +19,43 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
-          child: BlocConsumer<AuthBloc, AuthState>(
-            listener: (context, state) {
-              if (state is AuthAuthenticated) {
-                Navigator.pushReplacementNamed(context, '/home');
-              } else if (state is AuthError) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.message),
-                    backgroundColor: Colors.red,
-                  ),
+      body: BlocListener<InventoryBloc, InventoryState>(
+        listener: (context, inventoryState) {
+          if (inventoryState is InventoryLoaded) {
+            if (inventoryState.inventories.isNotEmpty) {
+              context.go('/inventory-list');
+            } else {
+              context.go('/create-inventory');
+            }
+          }
+        },
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 16.0,
+            ),
+            child: BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, authState) {
+                if (authState is AuthAuthenticated) {
+                  context.read<InventoryBloc>().add(LoadUserInventories());
+                } else if (authState is AuthError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(authState.message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              },
+              builder: (context, authState) {
+                return _LoginForm(
+                  formKey: _formKey,
+                  emailController: emailController,
+                  passwordController: passwordController,
                 );
-              }
-            },
-            builder: (context, state) {
-              return _LoginForm(
-                formKey: _formKey,
-                emailController: emailController,
-                passwordController: passwordController,
-              );
-            },
+              },
+            ),
           ),
         ),
       ),
