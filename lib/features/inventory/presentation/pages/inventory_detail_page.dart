@@ -46,7 +46,7 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
       ),
       body: BlocListener<ProductBloc, ProductState>(
         listener: (context, state) {
-          if (state is CreateProductSuccess) {
+          if (state is CreateProductSuccess || state is UpdateProductSuccess) {
             context.read<ProductBloc>().add(LoadProducts(widget.inventoryId));
           }
         },
@@ -72,8 +72,14 @@ class _InventoryDetailPageState extends State<InventoryDetailPage> {
                       final product = state.products[index];
                       return ProductItem(
                         product: product,
-                        onEdit: () {
-                          // TODO: Implementar la edición de productos
+                        onEdit: () async {
+                          await context.push(
+                            '/product-form',
+                            extra: {
+                              'inventoryId': widget.inventoryId,
+                              'productId': product.id,
+                            },
+                          );
                         },
                         onDelete: () {
                           // TODO: Implementar la eliminación de productos

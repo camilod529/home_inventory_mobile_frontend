@@ -7,4 +7,9 @@ abstract class ProductRepository {
     String inventoryId,
   );
   Future<Either<Failure, Product>> createProduct(Product product);
+
+  Future<Either<Failure, Product>> updateProduct(
+    String productId,
+    Product product,
+  );
 }

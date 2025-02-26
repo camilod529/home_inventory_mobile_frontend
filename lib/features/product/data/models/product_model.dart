@@ -4,12 +4,23 @@ class ProductModel extends Product {
   const ProductModel({
     required super.id,
     required super.name,
-    required super.description,
+    super.description,
     required super.quantity,
     required super.unit,
     required super.inventoryId,
     super.expirationDate,
   });
+
+  factory ProductModel.empty() {
+    return ProductModel(
+      id: '',
+      name: '',
+      description: '',
+      quantity: 0,
+      unit: '',
+      inventoryId: '',
+    );
+  }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(

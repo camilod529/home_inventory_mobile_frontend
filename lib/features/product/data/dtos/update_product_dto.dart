@@ -1,43 +1,40 @@
 import 'package:equatable/equatable.dart';
 
-class Product extends Equatable {
-  final String id;
+class UpdateProductDto extends Equatable {
   final String name;
   final String? description;
   final int quantity;
   final String unit;
-  final String inventoryId;
   final String? expirationDate;
+  final String inventoryId;
 
-  const Product({
-    required this.id,
+  const UpdateProductDto({
     required this.name,
-    required this.description,
+    this.description,
     required this.quantity,
     required this.unit,
-    required this.inventoryId,
     this.expirationDate,
+    required this.inventoryId,
   });
 
-  factory Product.empty() {
-    return Product(
-      id: '',
-      name: '',
-      description: '',
-      quantity: 0,
-      unit: '',
-      inventoryId: '',
-    );
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'description': description,
+      'quantity': quantity,
+      'unit': unit,
+      'expirationDate': expirationDate,
+      'inventoryId': inventoryId,
+    };
   }
 
   @override
   List<Object?> get props => [
-    id,
     name,
     description,
     quantity,
     unit,
-    inventoryId,
     expirationDate,
+    inventoryId,
   ];
 }

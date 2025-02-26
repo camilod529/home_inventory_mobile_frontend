@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_inventory_app/features/product/data/models/product_model.dart';
 import 'package:home_inventory_app/features/product/domain/entities/product.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_bloc.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_event.dart';
+import 'package:home_inventory_app/features/product/presentation/bloc/product_state.dart';
 
 class ProductFormPage extends StatefulWidget {
   final String inventoryId;
@@ -23,6 +25,28 @@ class _ProductFormPageState extends State<ProductFormPage> {
   final TextEditingController _unitController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+
+    // Si se está editando un producto, buscarlo en el bloc y llenar los campos
+    if (widget.productId != null) {
+      final productState = context.read<ProductBloc>().state;
+      if (productState is ProductLoaded) {
+        final product = productState.products.firstWhere(
+          (p) => p.id == widget.productId,
+          orElse:
+              () => ProductModel.empty(), // Producto vacío si no se encuentra
+        );
+
+        _nameController.text = product.name;
+        _descriptionController.text = product.description ?? "";
+        _quantityController.text = product.quantity.toString();
+        _unitController.text = product.unit;
+      }
+    }
+  }
+
+  @override
   void dispose() {
     _nameController.dispose();
     _descriptionController.dispose();
@@ -36,13 +60,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
       final product = Product(
         id: widget.productId ?? '',
         name: _nameController.text,
-        description: _descriptionController.text,
+        description:
+            _descriptionController.text.isNotEmpty
+                ? _descriptionController.text
+                : null,
         quantity: int.parse(_quantityController.text),
         unit: _unitController.text,
         inventoryId: widget.inventoryId,
       );
 
-      context.read<ProductBloc>().add(CreateProductEvent(product));
+      if (widget.productId == null) {
+        context.read<ProductBloc>().add(CreateProductEvent(product));
+      } else {
+        final bloc = context.read<ProductBloc>();
+        print('bloc: $bloc');
+        bloc.add(UpdateProductEvent(widget.productId!, product));
+        // context.read<ProductBloc>().add(
+        //   UpdateProductEvent(
+        //     widget.productId!,
+        //     Product(
+        //       id: widget.productId!,
+        //       name: product.name,
+        //       description: product.description,
+        //       quantity: product.quantity,
+        //       unit: product.unit,
+        //       expirationDate:
+        //           null, // Puedes agregar un campo de fecha si lo deseas
+        //       inventoryId: widget.inventoryId,
+        //     ),
+        //   ),
+        // );
+      }
+
       context.pop();
     }
   }
