@@ -9,24 +9,24 @@ class InventorySelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Seleccionar Inventario")),
+      appBar: AppBar(title: const Text("Select Inventory")),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             const Text(
-              "Bienvenido 🎉",
+              "Welcome",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
             const Text(
-              "Para comenzar, crea un nuevo inventario o únete a uno existente.",
+              "To get started, create a new inventory or join an existing one.",
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 24),
 
-            // Botón para crear inventario
+            // Button to create inventory
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -34,7 +34,7 @@ class InventorySelectionPage extends StatelessWidget {
                   context.go('/create-inventory');
                 },
                 icon: const Icon(Icons.add),
-                label: const Text("Crear Inventario"),
+                label: const Text("Create Inventory"),
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 14.0),
                 ),
@@ -42,11 +42,11 @@ class InventorySelectionPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Campo para unirse a un inventario
+            // Input field to join an inventory
             TextField(
               controller: codeController,
               decoration: InputDecoration(
-                labelText: "Código de Inventario",
+                labelText: "Inventory Code",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
@@ -54,7 +54,7 @@ class InventorySelectionPage extends StatelessWidget {
             ),
             const SizedBox(height: 12),
 
-            // Botón para unirse
+            // Button to join an inventory
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -64,7 +64,7 @@ class InventorySelectionPage extends StatelessWidget {
                     context.go('/join-inventory/$code');
                   }
                 },
-                child: const Text("Unirse al Inventario"),
+                child: const Text("Join Inventory"),
               ),
             ),
           ],
