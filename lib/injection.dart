@@ -14,7 +14,7 @@ final sl = GetIt.instance;
 void setupDependencies() {
   // Registering DIO
   sl.registerLazySingleton<Dio>(
-    () => Dio(BaseOptions(baseUrl: 'http://localhost:3000/api')),
+    () => Dio(BaseOptions(baseUrl: 'http://172.16.99.31:3000/api')),
   );
 
   // registering DataSources

@@ -20,11 +20,21 @@ class AuthRemoteDataSource {
     String email,
     String password,
   ) async {
-    final response = await dio.post(
-      '/auth/register',
-      data: {'name': name, 'email': email, 'password': password},
-    );
+    print('registering');
+    try {
+      final response = await dio.post(
+        '/auth/register',
+        data: {'fullName': name, 'email': email, 'password': password},
+      );
 
-    return AuthResponseModel.fromJson(response.data);
+      print('response: ${response.data}');
+
+      return AuthResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      print(
+        "DioException: ${e.response?.data}",
+      ); //  Verifica el mensaje de error
+      throw Exception("Error en el login: ${e.response?.data}");
+    }
   }
 }
