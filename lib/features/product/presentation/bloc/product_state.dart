@@ -13,3 +13,5 @@ class ProductError extends ProductState {
   final String message;
   ProductError(this.message);
 }
+
+class CreateProductSuccess extends ProductState {}

@@ -23,6 +23,7 @@ import 'package:home_inventory_app/features/inventory/presentation/bloc/inventor
 import 'package:home_inventory_app/features/product/data/datasources/product_remote_data_source.dart';
 import 'package:home_inventory_app/features/product/data/repositories/product_repository_impl.dart';
 import 'package:home_inventory_app/features/product/domain/repositories/product_repository.dart';
+import 'package:home_inventory_app/features/product/domain/usecases/create_product.dart';
 import 'package:home_inventory_app/features/product/domain/usecases/get_products.dart';
 // import 'package:home_inventory_app/features/product/domain/usecases/get_products.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_bloc.dart';
@@ -111,5 +112,11 @@ void setupDependencies() {
     () => GetProducts(sl<ProductRepository>()),
   );
 
-  sl.registerLazySingleton(() => ProductBloc(sl<GetProducts>()));
+  sl.registerLazySingleton<CreateProduct>(
+    () => CreateProduct(sl<ProductRepository>()),
+  );
+
+  sl.registerLazySingleton(
+    () => ProductBloc(sl<GetProducts>(), sl<CreateProduct>()),
+  );
 }

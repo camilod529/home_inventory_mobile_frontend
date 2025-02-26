@@ -6,4 +6,5 @@ abstract class ProductRepository {
   Future<Either<Failure, List<Product>>> getProductsByInventory(
     String inventoryId,
   );
+  Future<Either<Failure, Product>> createProduct(Product product);
 }
