@@ -7,6 +7,10 @@ import 'package:home_inventory_app/features/inventory/presentation/bloc/inventor
 class InventoryListPage extends StatelessWidget {
   const InventoryListPage({super.key});
 
+  Future<void> _refreshInventories(BuildContext context) async {
+    context.read<InventoryBloc>().add(LoadUserInventories());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,18 +20,36 @@ class InventoryListPage extends StatelessWidget {
           if (state is InventoryLoading) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is InventoryLoaded) {
-            return ListView.builder(
-              itemCount: state.inventories.length,
-              itemBuilder: (context, index) {
-                final inventory = state.inventories[index];
-                return ListTile(
-                  title: Text(inventory.name),
-                  subtitle: Text("Code: ${inventory.code}"),
-                  onTap: () {
-                    // Aquí podrías navegar al detalle del inventario
-                  },
-                );
-              },
+            return RefreshIndicator(
+              onRefresh: () => _refreshInventories(context),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                itemCount: state.inventories.length,
+                itemBuilder: (context, index) {
+                  final inventory = state.inventories[index];
+                  return Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.inventory_2,
+                        color: Colors.blue,
+                      ),
+                      title: Text(
+                        inventory.name,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text("Code: ${inventory.code}"),
+                      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+                      onTap: () {
+                        // Navegar al detalle del inventario
+                      },
+                    ),
+                  );
+                },
+              ),
             );
           } else if (state is InventoryError) {
             return Center(child: Text(state.message));
@@ -37,9 +59,8 @@ class InventoryListPage extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.read<InventoryBloc>().add(LoadUserInventories());
-        },
+        onPressed: () => _refreshInventories(context),
+        tooltip: "Refresh Inventories",
         child: const Icon(Icons.refresh),
       ),
     );
