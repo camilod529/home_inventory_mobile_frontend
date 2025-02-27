@@ -14,7 +14,7 @@ class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key, required this.inventoryId, this.productId});
 
   @override
-  _ProductFormPageState createState() => _ProductFormPageState();
+  State<ProductFormPage> createState() => _ProductFormPageState();
 }
 
 class _ProductFormPageState extends State<ProductFormPage> {
@@ -73,7 +73,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
         context.read<ProductBloc>().add(CreateProductEvent(product));
       } else {
         final bloc = context.read<ProductBloc>();
-        print('bloc: $bloc');
+
         bloc.add(UpdateProductEvent(widget.productId!, product));
         // context.read<ProductBloc>().add(
         //   UpdateProductEvent(
