@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:home_inventory_app/core/widgets/base_scaffold.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_bloc.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_event.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_state.dart';
@@ -28,8 +29,8 @@ class _InventoryListPageState extends State<InventoryListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("My Inventories")),
+    return BaseScaffold(
+      title: ("My Inventories"),
       body: BlocBuilder<InventoryBloc, InventoryState>(
         builder: (context, state) {
           if (state is InventoryLoading) {

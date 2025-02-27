@@ -60,7 +60,10 @@ class _SettingsPageState extends State<SettingsPage> {
                         style: TextStyle(fontSize: 18),
                       ),
                       DropdownButton<Color>(
-                        value: state.color,
+                        value:
+                            colorOptions.contains(state.color)
+                                ? state.color
+                                : colorOptions.first,
                         items:
                             colorOptions.map((Color color) {
                               return DropdownMenuItem<Color>(

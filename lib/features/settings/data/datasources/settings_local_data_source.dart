@@ -28,13 +28,13 @@ class SettingsLocalDataSourceImpl implements SettingsLocalDataSource {
   @override
   Future<Color> getSelectedColor() async {
     final box = await Hive.openBox(_settingsBox);
-    final colorValue = box.get(_colorKey, defaultValue: Colors.blue);
+    final colorValue = box.get(_colorKey, defaultValue: Colors.blue.toARGB32());
     return Color(colorValue);
   }
 
   @override
   Future<void> saveSelectedColor(Color color) async {
     final box = await Hive.openBox(_settingsBox);
-    await box.put(_colorKey, color);
+    await box.put(_colorKey, color.toARGB32());
   }
 }
