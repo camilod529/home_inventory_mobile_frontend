@@ -66,11 +66,9 @@ class ProductRepositoryImpl implements ProductRepository {
       );
 
       return Right(productUpdated);
-    } on DioException catch (e) {
-      print(e);
+    } on DioException {
       return Left(ServerFailure());
     } catch (e) {
-      print(e);
       return Left(ServerFailure());
     }
   }
