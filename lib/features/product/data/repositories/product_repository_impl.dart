@@ -21,8 +21,7 @@ class ProductRepositoryImpl implements ProductRepository {
         inventoryId,
       );
       return Right(products);
-    } on DioException catch (e) {
-      print(e);
+    } on DioException {
       return Left(ServerFailure());
     } catch (e) {
       return Left(ServerFailure());
