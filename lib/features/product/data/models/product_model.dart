@@ -27,7 +27,10 @@ class ProductModel extends Product {
       id: json['id'],
       name: json['name'],
       description: json['description'] ?? '',
-      quantity: json['quantity'],
+      quantity:
+          (json['quantity'] is num)
+              ? (json['quantity'] as num).toDouble()
+              : double.tryParse(json['quantity'].toString()) ?? 0.0,
       unit: json['unit'],
       inventoryId: json['inventory']['id'],
       expirationDate: json['expirationDate'],

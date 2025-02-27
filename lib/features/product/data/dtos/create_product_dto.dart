@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class CreateProductDTO extends Equatable {
   final String name;
   final String description;
-  final int quantity;
+  final double quantity;
   final String unit;
   final String inventoryId;
 

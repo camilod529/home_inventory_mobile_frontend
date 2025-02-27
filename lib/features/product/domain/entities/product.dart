@@ -4,7 +4,7 @@ class Product extends Equatable {
   final String id;
   final String name;
   final String? description;
-  final int quantity;
+  final double quantity;
   final String unit;
   final String inventoryId;
   final String? expirationDate;

@@ -64,7 +64,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             _descriptionController.text.isNotEmpty
                 ? _descriptionController.text
                 : null,
-        quantity: int.parse(_quantityController.text),
+        quantity: double.parse(_quantityController.text),
         unit: _unitController.text,
         inventoryId: widget.inventoryId,
       );
