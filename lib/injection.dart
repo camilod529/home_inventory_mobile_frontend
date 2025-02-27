@@ -29,6 +29,8 @@ import 'package:home_inventory_app/features/product/domain/usecases/get_products
 import 'package:home_inventory_app/features/product/domain/usecases/update_product.dart';
 // import 'package:home_inventory_app/features/product/domain/usecases/get_products.dart';
 import 'package:home_inventory_app/features/product/presentation/bloc/product_bloc.dart';
+import 'package:home_inventory_app/features/settings/data/datasources/settings_local_data_source.dart';
+import 'package:home_inventory_app/features/settings/presentation/bloc/settings_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -129,5 +131,16 @@ void setupDependencies() {
       sl<UpdateProduct>(),
       sl<DeleteProduct>(),
     ),
+  );
+
+  // ==============================
+  // 🔹 Settings
+  // ==============================
+
+  sl.registerLazySingleton<SettingsLocalDataSource>(
+    () => SettingsLocalDataSourceImpl(),
+  );
+  sl.registerLazySingleton<SettingsBloc>(
+    () => SettingsBloc(settingsLocalDataSource: sl<SettingsLocalDataSource>()),
   );
 }

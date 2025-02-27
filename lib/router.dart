@@ -5,6 +5,7 @@ import 'package:home_inventory_app/features/inventory/presentation/pages/invento
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_list_page.dart';
 import 'package:home_inventory_app/features/inventory/presentation/pages/inventory_selection_page.dart';
 import 'package:home_inventory_app/features/product/presentation/pages/product_form_page.dart';
+import 'package:home_inventory_app/features/settings/presentation/pages/settings_page.dart';
 
 final router = GoRouter(
   initialLocation: '/login',
@@ -42,6 +43,10 @@ final router = GoRouter(
           productId: extra?['productId'],
         );
       },
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );
