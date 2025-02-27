@@ -12,4 +12,6 @@ abstract class ProductRepository {
     String productId,
     Product product,
   );
+
+  Future<Either<Failure, void>> deleteProduct(String id);
 }

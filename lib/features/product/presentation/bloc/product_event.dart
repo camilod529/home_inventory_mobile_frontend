@@ -24,3 +24,11 @@ class UpdateProductEvent extends ProductEvent {
   @override
   List<Object> get props => [productId, product];
 }
+
+class DeleteProductEvent extends ProductEvent {
+  final String productId;
+  DeleteProductEvent(this.productId);
+
+  @override
+  List<Object> get props => [productId];
+}

@@ -7,6 +7,7 @@ abstract class ProductRemoteDataSource {
   Future<List<ProductModel>> getProductsByInventory(String inventoryId);
   Future<ProductModel> createProduct(CreateProductDTO product);
   Future<ProductModel> updateProduct(String productId, UpdateProductDto dto);
+  Future<void> deleteProduct(String productId);
 }
 
 class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
@@ -49,6 +50,14 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
       return ProductModel.fromJson(response.data);
     } else {
       throw Exception("Error updating product");
+    }
+  }
+
+  @override
+  Future<void> deleteProduct(String productId) async {
+    final response = await dio.delete('/products/$productId');
+    if (response.statusCode != 200) {
+      throw Exception("Error deleting product");
     }
   }
 }

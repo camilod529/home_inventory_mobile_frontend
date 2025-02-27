@@ -17,3 +17,5 @@ class ProductError extends ProductState {
 class CreateProductSuccess extends ProductState {}
 
 class UpdateProductSuccess extends ProductState {}
+
+class DeleteProductSuccess extends ProductState {}
