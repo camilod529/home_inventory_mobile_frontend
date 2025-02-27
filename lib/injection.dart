@@ -38,7 +38,7 @@ void setupDependencies() {
   sl.registerLazySingleton<AuthLocalDataSource>(() => AuthLocalDataSource());
 
   sl.registerLazySingleton<Dio>(() {
-    final dio = Dio(BaseOptions(baseUrl: 'http://172.16.99.31:3000/api'));
+    final dio = Dio(BaseOptions(baseUrl: 'http://192.168.1.107:3000/api'));
     dio.interceptors.add(AuthInterceptor(sl<AuthLocalDataSource>()));
     return dio;
   });

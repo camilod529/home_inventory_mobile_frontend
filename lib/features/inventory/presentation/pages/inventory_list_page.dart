@@ -5,8 +5,22 @@ import 'package:home_inventory_app/features/inventory/presentation/bloc/inventor
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_event.dart';
 import 'package:home_inventory_app/features/inventory/presentation/bloc/inventory_state.dart';
 
-class InventoryListPage extends StatelessWidget {
+class InventoryListPage extends StatefulWidget {
   const InventoryListPage({super.key});
+
+  @override
+  State<InventoryListPage> createState() => _InventoryListPageState();
+}
+
+class _InventoryListPageState extends State<InventoryListPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<InventoryBloc>().add(LoadUserInventories());
+    });
+  }
 
   Future<void> _refreshInventories(BuildContext context) async {
     context.read<InventoryBloc>().add(LoadUserInventories());

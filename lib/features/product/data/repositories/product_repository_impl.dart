@@ -60,14 +60,17 @@ class ProductRepositoryImpl implements ProductRepository {
         inventoryId: product.inventoryId,
       );
 
-      // TODO: Check for errors
       final productUpdated = await remoteDataSource.updateProduct(
         productId,
         dto,
       );
 
       return Right(productUpdated);
+    } on DioException catch (e) {
+      print(e);
+      return Left(ServerFailure());
     } catch (e) {
+      print(e);
       return Left(ServerFailure());
     }
   }
